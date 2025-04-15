@@ -2,7 +2,7 @@
 """
 This file contains the command line arguments for the vLLM's
 OpenAI-compatible server. It is kept in a separate file for documentation
-purposes.
+purposes. 入口2 启动api_server
 """
 
 import argparse

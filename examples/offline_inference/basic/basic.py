@@ -12,7 +12,7 @@ prompts = [
 # Create a sampling params object.
 sampling_params = SamplingParams(temperature=0.8, top_p=0.95)
 
-
+# 入口
 def main():
     # Create an LLM.
     llm = LLM(model="facebook/opt-125m")

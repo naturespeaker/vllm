@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-
+# 入口
 import itertools
 import warnings
 from collections.abc import Sequence
