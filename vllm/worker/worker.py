@@ -1,4 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
+# 主要看这个worker，其它的可能有什么骚操作。
 """A GPU worker class."""
 import gc
 import os

@@ -775,6 +775,7 @@ class FlashAttentionImpl(AttentionImpl):
         assert query.shape[0] == num_prefill_query_tokens
         assert decode_query.shape[0] == num_decode_query_tokens
 
+        # 会给prefill和decode不同的kernal，prefill是处理输入，decode是处理输出
         if prefill_meta := attn_metadata.prefill_metadata:
             # Prompt run.
             if (kv_cache.numel() == 0 or prefill_meta.block_tables is None
@@ -833,6 +834,7 @@ class FlashAttentionImpl(AttentionImpl):
                 max_seq_len = max(prefill_meta.seq_lens)
                 descale_shape = (prefill_meta.query_start_loc.shape[0] - 1,
                                  key.shape[1])
+                # 不需要从GPU里拿任何data，不需要block table，需要的情况在flash_attn_with_kvcache
                 flash_attn_varlen_func(  # noqa
                     q=query,
                     k=key_cache,
@@ -896,6 +898,7 @@ class FlashAttentionImpl(AttentionImpl):
                     block_tables_arg,
                 ) = get_seq_len_block_table_args(decode_meta, False, attn_type)
                 descale_shape = (seq_lens_arg.shape[0], key_cache.shape[-2])
+                # 需要拿data的情况
                 flash_attn_with_kvcache(
                     q=decode_query.unsqueeze(1),
                     k_cache=key_cache,
